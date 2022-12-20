@@ -82,3 +82,4 @@ describe("DELETE requests", () => {
     expect(myData).toStrictEqual(data);
   });
 });
+

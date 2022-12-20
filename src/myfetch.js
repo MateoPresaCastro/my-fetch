@@ -1,7 +1,6 @@
 const XMLHttpRequest = require('xhr2');
 
-const { log } = console;
-
+// for future tests
 const METHODS = new Set([
   'CONNECT',
   'DELETE',
@@ -81,9 +80,5 @@ const myFetch = (URL, requestOptions) => {
     }
   });
 };
-
-
-// myFetch('google.com')
-
 
 module.exports = myFetch;
