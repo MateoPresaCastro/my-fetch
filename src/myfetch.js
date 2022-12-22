@@ -1,4 +1,3 @@
-const { request } = require("http");
 const XMLHttpRequest = require("xhr2");
 
 // for future tests
