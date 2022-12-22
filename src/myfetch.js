@@ -83,7 +83,6 @@ const myFetch = (URL, requestOptions = {}) => {
       xhttp.send(requestOptions.body);
 
       function setRequestHeaders(xhttp, headers) {
-        if (headers === undefined) return;
         for (const [key, value] of Object.entries(headers)) {
           xhttp.setRequestHeader(key, value);
         }
