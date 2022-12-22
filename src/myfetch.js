@@ -1,26 +1,41 @@
-const XMLHttpRequest = require('xhr2');
+const { request } = require("http");
+const XMLHttpRequest = require("xhr2");
 
 // for future tests
 const METHODS = new Set([
-  'CONNECT',
-  'DELETE',
-  'GET',
-  'HEAD',
-  'OPTIONS',
-  'POST',
-  'PUT',
-  'TRACE'
-])
+  "CONNECT",
+  "DELETE",
+  "GET",
+  "HEAD",
+  "OPTIONS",
+  "POST",
+  "PUT",
+  "TRACE",
+]);
+
+const defaultOptions = {
+  method: "GET",
+  headers: {},
+  body: null,
+};
 
 const myFetch = (URL, requestOptions) => {
   return new Promise((resolve, reject) => {
     try {
       const xhttp = new XMLHttpRequest();
 
-      requestOptions = requestOptions ?? {
-        method: "GET",
-        headers: {},
-        body: null,
+      requestOptions = {
+        ...defaultOptions,
+        ...(isRequestOptionsValid() ? requestOptions : {}),
+      };
+
+      function isRequestOptionsValid () {
+        return typeof requestOptions === "object" &&
+          !Array.isArray(requestOptions) &&
+          requestOptions !== null &&
+          requestOptions !== undefined
+          ? true
+          : false;
       };
 
       xhttp.onreadystatechange = function () {
@@ -70,13 +85,13 @@ const myFetch = (URL, requestOptions) => {
       xhttp.send(requestOptions.body);
 
       function setRequestHeader(xhttp, headers) {
-        if(headers === undefined) return
+        if (headers === undefined) return;
         for (const [key, value] of Object.entries(headers)) {
           xhttp.setRequestHeader(key, value);
         }
       }
     } catch (error) {
-      reject(error)
+      reject(error);
     }
   });
 };

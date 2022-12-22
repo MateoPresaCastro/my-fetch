@@ -83,3 +83,16 @@ describe("DELETE requests", () => {
   });
 });
 
+describe("GET requests with options", () => {
+  test("Should GET like the regular fetch with extra headers", async () => {
+    const myResponse = await myFetch(URL, {
+      headers: { "Content-type": "application/json; charset=UTF-8" },
+    });
+    const myData = await myResponse.json();
+
+    const response = await fetch(URL);
+    const data = await response.json();
+
+    expect(myData).toStrictEqual(data);
+  });
+});
