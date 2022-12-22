@@ -12,7 +12,7 @@ const METHODS = new Set([
   "TRACE",
 ]);
 
-const defaultOptions = {
+const DEFAULT_OPTIONS = {
   method: "GET",
   headers: {},
   body: null,
@@ -24,18 +24,18 @@ const myFetch = (URL, requestOptions) => {
       const xhttp = new XMLHttpRequest();
 
       requestOptions = {
-        ...defaultOptions,
+        ...DEFAULT_OPTIONS,
         ...(isRequestOptionsValid() ? requestOptions : {}),
       };
 
-      function isRequestOptionsValid () {
+      function isRequestOptionsValid() {
         return typeof requestOptions === "object" &&
           !Array.isArray(requestOptions) &&
           requestOptions !== null &&
           requestOptions !== undefined
           ? true
           : false;
-      };
+      }
 
       xhttp.onreadystatechange = function () {
         if (ableToCreateResponse(xhttp)) {
@@ -80,15 +80,16 @@ const myFetch = (URL, requestOptions) => {
       }
 
       xhttp.open(requestOptions.method, URL, true);
-      setRequestHeader(xhttp, requestOptions.headers);
+      setRequestHeaders(xhttp, requestOptions.headers);
       xhttp.send(requestOptions.body);
 
-      function setRequestHeader(xhttp, headers) {
+      function setRequestHeaders(xhttp, headers) {
         if (headers === undefined) return;
         for (const [key, value] of Object.entries(headers)) {
           xhttp.setRequestHeader(key, value);
         }
       }
+
     } catch (error) {
       reject(error);
     }
