@@ -18,7 +18,7 @@ const DEFAULT_OPTIONS = {
   body: null,
 };
 
-const myFetch = (URL, requestOptions) => {
+const myFetch = (URL, requestOptions = {}) => {
   return new Promise((resolve, reject) => {
     try {
       const xhttp = new XMLHttpRequest();
@@ -29,12 +29,11 @@ const myFetch = (URL, requestOptions) => {
       };
 
       function isRequestOptionsValid() {
-        return typeof requestOptions === "object" &&
+        return (
+          typeof requestOptions === "object" &&
           !Array.isArray(requestOptions) &&
-          requestOptions !== null &&
-          requestOptions !== undefined
-          ? true
-          : false;
+          requestOptions !== null
+        );
       }
 
       xhttp.onreadystatechange = function () {
@@ -89,7 +88,6 @@ const myFetch = (URL, requestOptions) => {
           xhttp.setRequestHeader(key, value);
         }
       }
-
     } catch (error) {
       reject(error);
     }
